@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">@color/blue_material</color>
+    <color name="colorPrimaryDark">@color/blue_material_dark</color>
+    <color name="colorAccent">@color/orange_material</color>
+
+
+    <color name="white">#fff</color>
+    <color name="black">#000</color>
+    <color name="cool_black">#3000</color>
+    <color name="red_material">#F44336</color>
+    <color name="blue_material">#085394</color>
+    <color name="blue_material_dark">#002b66</color>
+    <color name="orange_material">#f27800</color>
+    <color name="green_material">#4CAF50</color>
+    <color name="yellow_material">#FBC02D</color>
+    <color name="soft_gray">#eee</color>
+    <color name="gray">#4C4C4C</color>
+
+    <color name="sniffer_gauge_start">#57E0ED</color>
+    <color name="sniffer_gauge_background">#dadada</color>
+    <color name="sniffer_gauge_no_signal">#c92020</color>
+    <color name="sniffer_gauge_poor">#EF3232</color>
+    <color name="sniffer_gauge_fair">#f77e2e</color>
+    <color name="sniffer_gauge_good">#f2cb2c</color>
+    <color name="sniffer_gauge_excellent">#8be642</color>
+
+</resources>

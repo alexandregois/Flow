@@ -1,0 +1,43 @@
+buildscript {
+    ext.kotlin_version = '1.7.10'
+    repositories {
+        google()
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.2.0'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+
+        // maven { url 'http://dl.bintray.com/amulyakhare/maven' }
+
+        // maven { url "http://dl.bintray.com/ahmedrizwan/maven" }
+
+        // maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+
+        // maven { url "https://raw.github.com/laenger/maven-releases/master/releases" }
+
+        // maven { url "https://jitpack.io" }
+
+        // maven { url "https://maven.google.com" }
+    }
+}
+
+rootProject.buildDir = '../build'
+subprojects {
+    project.buildDir = "${rootProject.buildDir}/${project.name}"
+}
+subprojects {
+    project.evaluationDependsOn(':app')
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

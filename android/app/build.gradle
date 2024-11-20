@@ -1,0 +1,199 @@
+def localProperties = new Properties()
+def localPropertiesFile = rootProject.file('local.properties')
+if (localPropertiesFile.exists()) {
+	localPropertiesFile.withReader('UTF-8') { reader ->
+		localProperties.load(reader)
+	}
+}
+
+def flutterRoot = localProperties.getProperty('flutter.sdk')
+if (flutterRoot == null) {
+	throw new GradleException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
+}
+
+def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
+if (flutterVersionCode == null) {
+	flutterVersionCode = '1'
+}
+
+def flutterVersionName = localProperties.getProperty('flutter.versionName')
+if (flutterVersionName == null) {
+	flutterVersionName = '1.0'
+}
+
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
+
+android {
+	compileSdkVersion flutter.compileSdkVersion
+    ndkVersion flutter.ndkVersion
+
+	compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+	sourceSets {
+		main.java.srcDirs += 'src/main/kotlin'
+	}
+
+	lintOptions {
+		disable 'InvalidPackage'
+		checkReleaseBuilds false
+	}
+
+	defaultConfig {
+		applicationId "com.denox.flow"
+		minSdkVersion 21
+        targetSdkVersion 34
+		// compileSdkVersion 33
+        versionCode flutterVersionCode.toInteger()
+        versionName flutterVersionName
+		testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+	}
+
+	dataBinding {
+		enabled = true
+	}
+
+	signingConfigs {
+
+		myConfig {
+			storeFile file("denox_key.jks")
+			storePassword "usetheforcedenox"
+			keyAlias "denox"
+			keyPassword "usetheforcedenox"
+		}
+
+	}
+
+	flavorDimensions "myOnlyFlavorDimension"
+
+	buildTypes {
+		release {
+			debuggable false
+			signingConfig signingConfigs.myConfig
+			minifyEnabled true
+			//shrinkResources true
+
+//            dimension "myOnlyFlavorDimension"
+			buildConfigField 'String', 'GATEWAY_URL', '"gateway.denox.com.br"'
+			buildConfigField 'int', 'GATEWAY_PORT', '443'
+			buildConfigField 'String', 'HTTP_URL', '"https://api.denox.com.br"'
+
+		}
+
+		debug {
+			debuggable true
+			applicationIdSuffix ".dev"
+			versionNameSuffix ".dev"
+
+			//prod settings for devel
+			buildConfigField 'String', 'GATEWAY_URL', '"gateway.denox.com.br"'
+			buildConfigField 'int', 'GATEWAY_PORT', '443'
+			buildConfigField 'String', 'HTTP_URL', '"https://api.denox.com.br"'
+
+		}
+	}
+	packagingOptions {
+		exclude 'META-INF/DEPENDENCIES.txt'
+		exclude 'META-INF/LICENSE.txt'
+		exclude 'META-INF/NOTICE.txt'
+		exclude 'META-INF/NOTICE'
+		exclude 'META-INF/LICENSE'
+		exclude 'META-INF/DEPENDENCIES'
+		exclude 'META-INF/notice.txt'
+		exclude 'META-INF/license.txt'
+		exclude 'META-INF/dependencies.txt'
+		exclude 'META-INF/LGPL2.1'
+		exclude 'META-INF/ASL2.0'
+		exclude 'META-INF/LICENSE'
+		packagingOptions {
+       // Fixes duplicate libraries build issue, 
+       // when your project uses more than one plugin that depend on C++ libs.
+        pickFirst 'lib/**/libc++_shared.so'
+    }
+   
+   buildTypes {
+      release {
+         minifyEnabled true
+      }
+   }
+	}
+
+
+	compileOptions{
+		sourceCompatibility 1.8
+		targetCompatibility 1.8
+	}
+
+}
+
+
+flutter {
+	source '../..'
+}
+
+dependencies {
+	implementation fileTree(include: ['*.jar'], dir: 'libs')
+
+//    testImplementation 'junit:junit:4.12'
+//    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+//    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+	//Kotlin
+	implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+	implementation 'com.mcxiaoke.koi:core:0.5.5' // A lot of kotlin utils
+	implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:0.27.0-eap13'
+	implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:0.27.0-eap13'
+	implementation 'androidx.core:core-ktx:1.0.1'
+	implementation "org.jetbrains.anko:anko:0.10.8"
+
+	//Support
+	implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+	implementation 'androidx.legacy:legacy-support-v13:1.0.0'
+	implementation 'androidx.cardview:cardview:1.0.0'
+	implementation 'androidx.appcompat:appcompat:1.0.2'
+	implementation 'com.google.android.material:material:1.0.0'
+	implementation 'androidx.recyclerview:recyclerview:1.0.0'
+	implementation 'androidx.multidex:multidex:2.0.1'
+	implementation 'androidx.exifinterface:exifinterface:1.0.0'
+//	implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+	implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha2'
+	implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0-alpha03'
+	implementation 'android.arch.lifecycle:common-java8:1.1.0'
+
+	//Room
+	implementation 'androidx.room:room-runtime:2.1.0-alpha01'
+	//Communication
+	//    implementation 'commons-io:commons-io:2.4'
+	implementation 'org.apache.commons:commons-lang3:3.4'
+	implementation 'com.google.protobuf:protobuf-java:3.1.0'
+	//Other
+	implementation 'com.android.volley:volley:1.1.0'
+	implementation 'org.greenrobot:eventbus:3.3.1'
+	implementation 'com.github.lzyzsd:circleprogress:1.1.0'
+	implementation 'com.github.gcacace:signature-pad:1.2.1'
+	implementation 'com.vinaygaba:rubberstamp:1.0.0'
+	implementation 'net.danlew:android.joda:2.10.3'
+	//Barcode sanner
+	implementation 'me.dm7.barcodescanner:zxing:1.8.4'
+	implementation 'com.github.shinayser:ArchitectureComponentsUtils:1.5.0'
+	implementation 'com.github.shinayser:ShinayserEssentials:1.16.0'
+	implementation project(':maxpb')
+}
+
+//configurations.all {
+//	resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+//		def requested = details.requested
+//		if (requested.group == 'com.android.support') {
+//			if (!requested.name.startsWith("multidex")) {
+//				details.useVersion '28.0.0'
+//			}
+//		}
+//	}
+//}

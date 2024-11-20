@@ -1,0 +1,28 @@
+{
+  "items": [
+    {
+      "id": 1,
+      "name": "Item 1",
+      "icon": "flaticon-car",
+      "type": "Veículo",
+      "color": "#19c5f0",
+      "description": "HCU-1743"
+    },
+    {
+      "id": 2,
+      "name": "Item 2",
+      "icon": "flaticon-truck",
+      "type": "Cavalo",
+      "color": "#f00505",
+      "description": "HYT-2034"
+    },
+    {
+      "id": 3,
+      "name": "Item 3",
+      "icon": "flaticon-bus",
+      "type": "Carreta",
+      "color": "#06ef35",
+      "description": "HNK-5576"
+    }
+  ]
+}

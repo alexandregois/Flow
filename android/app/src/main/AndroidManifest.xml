@@ -1,0 +1,155 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.denox.flow">
+
+    <!-- The INTERNET permission is required for development. Specifically,
+         flutter needs it to communicate with the running application
+         to allow setting breakpoints, to provide hot reload, etc.
+    -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- To auto-complete the email text field in the login form with the user's emails -->
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"/>
+
+    <uses-feature android:name="android.hardware.location.gps" />
+
+    <!-- io.flutter.app.FlutterApplication is an android.app.Application that
+         calls FlutterMain.startInitialization(this); in its onCreate method.
+         In most cases you can leave this as-is, but you if you want to provide
+         additional functionality it is fine to subclass or reimplement
+         FlutterApplication and put your custom class here. 
+         PARA APONTAR LOCAL
+         android:usesCleartextTraffic="true"
+         -->
+    <application
+        android:name=".FlowApplication"
+        android:allowBackup="false"
+        android:appComponentFactory="whateverString"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:largeHeap="true"
+        tools:ignore="GoogleAppIndexingWarning"
+        tools:replace="label,allowBackup,appComponentFactory">
+
+        <service android:name="id.flutter.flutter_background_service.BackgroundService" android:exported="true"/>
+
+        <activity
+            android:name=".MainActivity"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|layoutDirection|fontScale|screenLayout|density"
+            android:hardwareAccelerated="true"
+            android:launchMode="singleTop"
+            android:theme="@style/LaunchTheme"
+            android:windowSoftInputMode="adjustResize"
+            android:exported="true">
+            <!-- This keeps the window background of the activity showing
+                 until Flutter renders its first frame. It can be removed if
+                 there is no splash screen (such as the default splash screen
+                 defined in @style/LaunchTheme). -->
+
+
+            <meta-data
+                android:name="io.flutter.embedding.android.SplashScreenDrawable"
+                android:resource="@drawable/launch_background" />
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
+
+
+<!--        <activity-->
+<!--            android:name="InstallationHistoryFlutterActivity"-->
+<!--            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|layoutDirection|fontScale|screenLayout|density"-->
+<!--            android:hardwareAccelerated="true"-->
+<!--            android:launchMode="singleTop"-->
+<!--            android:theme="@style/LaunchTheme"-->
+<!--            android:windowSoftInputMode="adjustResize" />-->
+
+        <provider
+            android:name=".GenericFileProvider"
+            android:authorities="${applicationId}.myfileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_provider_paths" />
+        </provider>
+
+<!--        <activity-->
+<!--            android:name=".ui.DefaultActivity"-->
+<!--            android:theme="@style/AppTheme.NoActionBar" />-->
+<!--        -->
+<!--        <activity-->
+<!--            android:name=".ui.DefaultActivityWithToolbar"-->
+<!--            android:theme="@style/AppTheme" />-->
+
+<!--        <activity-->
+<!--            android:name=".ui.DefaultActivityPortrait"-->
+<!--            android:screenOrientation="portrait"-->
+<!--            android:theme="@style/AppTheme.NoActionBar" />-->
+
+<!--        <activity-->
+<!--            android:name=".ui.DefaultActivityLandscape"-->
+<!--            android:screenOrientation="landscape"-->
+<!--            android:theme="@style/AppTheme.NoActionBar" />-->
+
+<!--        <activity-->
+<!--            android:name=".ui.uninstallation.BaseUninstallationActivity"-->
+<!--            android:theme="@style/AppTheme.NoActionBar" />-->
+<!--        <activity-->
+<!--            android:name=".ui.installation.VehicleInstallationActivity"-->
+<!--            android:theme="@style/AppTheme.NoActionBar" />-->
+<!--        <activity-->
+<!--            android:name=".ui.installation.FixedAssetInstallationActivity"-->
+<!--            android:theme="@style/AppTheme.NoActionBar" />-->
+<!--        <activity-->
+<!--            android:name=".ui.installation.ManagementAssetInstallationActivity"-->
+<!--            android:theme="@style/AppTheme.NoActionBar" />-->
+<!--        <activity-->
+<!--            android:name=".ui.signature.SignatureActivity"-->
+<!--            android:screenOrientation="landscape"-->
+<!--            android:theme="@style/AppTheme.NoActionBar" />-->
+<!--        <activity-->
+<!--            android:name=".ui.bluetooth.BluetoothDevicesActivity"-->
+<!--            android:theme="@style/AppTheme.NoActionBar" />-->
+<!---->
+<!--        <service-->
+<!--            android:name=".service.RefreshTokenService"-->
+<!--            android:exported="false" />-->
+<!--        <service-->
+<!--            android:name=".service.RefreshInfoJobService"-->
+<!--            android:enabled="true"-->
+<!--            android:exported="false"-->
+<!--            android:permission="android.permission.BIND_JOB_SERVICE" />-->
+
+        <receiver
+            android:name=".receiver.BootReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+
+        </receiver>
+
+        <meta-data
+            android:name="flutterEmbedding"
+            android:value="2" />
+
+    </application>
+
+</manifest>
